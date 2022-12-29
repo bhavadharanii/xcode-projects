@@ -19,7 +19,8 @@ class CustomCell: UICollectionViewCell {
 }
 
 class ViewController: UIViewController {
-    //hsdvcbsjdfhvdjsf
+    //hsdvcbsjdfhvdjsfvnsjdfnvdskfv
+//sfjvnskjfnvs
     
     
     @IBOutlet weak var label2: UILabel!
