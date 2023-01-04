@@ -97,10 +97,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource,U
         return 1
     }
     
-    //horizontal space for the cells
+    //horizontalspacing for the cells
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1
     }
+    
     
 }
 
@@ -113,56 +114,67 @@ public extension String {
 }
 
 extension ViewController {
-    //find the operatar
+   
+    enum Operation: String {
+        case add = "+"
+        case subtract = "-"
+        case multiply = "*"
+        case divide = "/"
+        case modulo = "%"
+    }
+    
     func doRespectiveOperation() {
         characterArray = newValue?.charactersArray ?? []
-        
+
         for (_index, value) in characterArray.enumerated() {
-            if value == "+" {
-                doAdd(_index: _index)
-            } else if value == "-" {
-                doSubtract(_index: _index)
-            } else if value == "*" {
-                doMultiply(_index: _index)
-            } else if value == "/" {
-                doDivide(_index: _index)
-            } else if value == "%" {
-                doModulo(_index: _index)
+            if let operation = Operation(rawValue: String(value)) {
+                switch operation {
+                case .add:
+                    doAdd(_index: _index)
+                case .subtract:
+                    doSubtract(_index: _index)
+                case .multiply:
+                    doMultiply(_index: _index)
+                case .divide:
+                    doDivide(_index: _index)
+                case .modulo:
+                    doModulo(_index: _index)
+                }
             }
         }
-        
-        //addingfirstnumber aanad second number
+    
+        //perfoms addition  operation
         func doAdd(_index: Int) {
             let operands = getOperands(index: _index)
             let result = operands.firstNumber + operands.secondNumber
             label2.text = (newValue ?? "") + "\n" + String(result)
         }
         
-        //subtracting firstnumber and secondnumber
+        //perfoms suubraction  operation
         func doSubtract(_index: Int) {
              let operands = getOperands(index: _index)
-             let result =  operands.firstNumber + operands.secondNumber
+             let result =  operands.firstNumber - operands.secondNumber
              label2.text = (newValue ?? "") + "\n" + String(result)
         }
         
         //perfoms division ooperation
         func doDivide(_index: Int)  {
              let operands = getOperands(index: _index)
-             let result =  operands.firstNumber + operands.secondNumber
+             let result =  operands.firstNumber / operands.secondNumber
              label2.text = (newValue ?? "") + "\n" + String(result)
         }
         
-        //multiplying first and secondnumber
+        //perfoms multiply  operation
         func doMultiply(_index: Int) {
              let operands = getOperands(index: _index)
-             let result = operands.firstNumber + operands.secondNumber
+             let result = operands.firstNumber * operands.secondNumber
              label2.text = (newValue ?? "") + "\n" + String(result)
         }
         
-        //modulo firstnumber and secondnumber
+        //perfoms modulo  operation
         func doModulo(_index: Int) {
              let operands = getOperands(index: _index)
-             let result = operands.firstNumber + operands.secondNumber
+             let result = operands.firstNumber % operands.secondNumber
              label2.text = (newValue ?? "") + "\n" + String(result)
         }
     }
