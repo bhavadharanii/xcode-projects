@@ -19,9 +19,6 @@ class CustomCell: UICollectionViewCell {
 }
 
 class ViewController: UIViewController {
-    //hsdvcbsjdfhvdjsfvnsjdfnvdskfv
-//sfjvnskjfnvs
-    
     
     @IBOutlet weak var label2: UILabel!
     @IBOutlet weak var _collectionView: UICollectionView!
@@ -29,93 +26,9 @@ class ViewController: UIViewController {
     var dataValues: [String] = ["AC","-/+","%","/","7","8","9","*","4","5","6","-","1","2","3","+","0",".","="]
     var newValue: String?
     var characterArray:[Character] =  []
-
-    var firstNumber: Int?
-    var secondNumber: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-
-
-    //find the operatar
-
-    func doRespectiveOperation() {
-        characterArray = newValue?.charactersArray ?? []
-        var output : Int?
-        for (_index, value) in characterArray.enumerated() {
-            if value == "+"
-            {
-                commonFunction(index: _index)
-                print("Add :\( doAdd(firstValue: firstNumber ?? 0, secondValue: secondNumber ?? 0))")
-            }
-            else if value == "-"
-            {
-                commonFunction(index: _index)
-                print("Sub :\(doSubtract(firstValue: firstNumber ?? 0, secondValue: secondNumber ?? 0))")
-            }
-            else if value == "*"
-            {
-               commonFunction(index: _index)
-               print("Muultiply :\(doMultiply(firstValue: firstNumber ?? 0, secondValue: secondNumber ?? 0))")
-                
-            }
-            else if value == "/"
-            {
-                commonFunction(index: _index)
-               print("Divide :\(doDivide(firstValue: firstNumber ?? 0, secondValue: secondNumber ?? 0))")
-                
-            }
-            else if value == "%"
-            {
-                commonFunction(index: _index)
-                print("Modulo :\(doModulo(firstValue: firstNumber ?? 0, secondValue: secondNumber ?? 0))")
-                
-            }
-        }
-        func doAdd(firstValue: Int , secondValue: Int ) -> Int {
-           output = firstValue + secondValue
-            return output ?? 0
-          
-        }
-        func doSubtract(firstValue: Int , secondValue: Int ) -> Int {
-            
-          output = firstValue - secondValue
-            return output ?? 0
-            
-        }
-        func doDivide(firstValue: Int , secondValue: Int ) -> Int {
-            output = firstValue / secondValue
-            return output ?? 0
-        }
-        func doMultiply(firstValue: Int , secondValue: Int ) -> Int {
-           output = firstValue * secondValue
-            return output ?? 0
-        }
-        func doModulo(firstValue: Int , secondValue: Int ) -> Int {
-            
-            output =  firstValue % secondValue
-            return output ?? 0
-        }
-    }
-    
-    func commonFunction(index: Int) {
-        print(characterArray[index])
-        firstNumber = getNumber(startIndex: 0, endIndex: index-1)
-        secondNumber = getNumber(startIndex: index+1, endIndex: characterArray.count-1)
-    }
-    
-    func getNumber(startIndex: Int , endIndex: Int) -> Int {
-        var number : String?
-        for i in startIndex...endIndex {
-            number = (number ?? "") + String(characterArray[i])
-            
-        }
-        print("number:\(number)")
-        return Int(number ?? "") ?? 0
-    }
-    
-    func clearAll() {
-        label2.text = ""
     }
 }
 
@@ -131,17 +44,15 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource,U
         
     }
     
+    //Adding background color for the label first row is darkgrey,last column is systemorange,remaining all the cells are lightgrey
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as! CustomCell
         cell.numbersLabel.text = self.dataValues[indexPath.row]
-                
         if(indexPath.row == 3 || indexPath.row == 7 || indexPath.row == 11 || indexPath.row == 15 || indexPath.row == 18) {
             cell.numbersLabel.backgroundColor = .systemOrange
-        }
-        else if(indexPath.row < 3) {
+        }else if(indexPath.row < 3) {
             cell.numbersLabel.backgroundColor = .darkGray
-        }
-        else {
+        }else {
             cell.numbersLabel.backgroundColor = .lightGray
         }
         return cell
@@ -157,10 +68,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource,U
         + (flowayout?.sectionInset.right ?? 0.0)
         let size:CGFloat = (_collectionView.frame.size.width  - space) / 4.0
         
+        //the size of 0th cell is higher than alal the other cell
         if(indexPath.row == 16) {
             return CGSize(width: size + 99, height: size)
-        }
-        else {
+        }else {
             return CGSize(width: size+1, height: size)
         }
     }
@@ -175,20 +86,19 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource,U
         if dataValues[indexPath.row] == "=" {
             doRespectiveOperation()
         } else if dataValues[indexPath.row] == "AC" {
-                clearAll()
+            clearAll()
         }
-
+        
     }
     
-//verticalspacing for the cells
+    //verticalspacing for the cells
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-    
+        
         return 1
     }
     
     //horizontal space for the cells
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        
         return 1
     }
     
@@ -202,10 +112,76 @@ public extension String {
     }
 }
 
-
-//func XXX{
-//    firstnuumberr=
-//    seccconod
-//    output=
-//
-//}
+extension ViewController {
+    //find the operatar
+    func doRespectiveOperation() {
+        characterArray = newValue?.charactersArray ?? []
+        
+        for (_index, value) in characterArray.enumerated() {
+            if value == "+" {
+                doAdd(_index: _index)
+            } else if value == "-" {
+                doSubtract(_index: _index)
+            } else if value == "*" {
+                doMultiply(_index: _index)
+            } else if value == "/" {
+                doDivide(_index: _index)
+            } else if value == "%" {
+                doModulo(_index: _index)
+            }
+        }
+        
+        //addingfirstnumber aanad second number
+        func doAdd(_index: Int) {
+            let operands = getOperands(index: _index)
+            let result = operands.firstNumber + operands.secondNumber
+            label2.text = (newValue ?? "") + "\n" + String(result)
+        }
+        
+        //subtracting firstnumber and secondnumber
+        func doSubtract(_index: Int) {
+             let operands = getOperands(index: _index)
+             let result =  operands.firstNumber + operands.secondNumber
+             label2.text = (newValue ?? "") + "\n" + String(result)
+        }
+        
+        //perfoms division ooperation
+        func doDivide(_index: Int)  {
+             let operands = getOperands(index: _index)
+             let result =  operands.firstNumber + operands.secondNumber
+             label2.text = (newValue ?? "") + "\n" + String(result)
+        }
+        
+        //multiplying first and secondnumber
+        func doMultiply(_index: Int) {
+             let operands = getOperands(index: _index)
+             let result = operands.firstNumber + operands.secondNumber
+             label2.text = (newValue ?? "") + "\n" + String(result)
+        }
+        
+        //modulo firstnumber and secondnumber
+        func doModulo(_index: Int) {
+             let operands = getOperands(index: _index)
+             let result = operands.firstNumber + operands.secondNumber
+             label2.text = (newValue ?? "") + "\n" + String(result)
+        }
+    }
+    
+    func getOperands(index: Int) -> (firstNumber: Int, secondNumber: Int){
+        let _firstNumber = getNumberFromString(startIndex: 0, endIndex: index-1)
+        let _secondNumber = getNumberFromString(startIndex: index+1, endIndex: characterArray.count-1)
+        return (_firstNumber, _secondNumber )
+    }
+    
+    func getNumberFromString(startIndex: Int, endIndex: Int) -> Int {
+        var number: String?
+        for i in startIndex...endIndex {
+            number = (number ?? "") + String(characterArray[i])
+        }
+        return Int(number ?? "") ?? 0
+    }
+    
+    func clearAll() {
+        label2.text = ""
+    }
+}

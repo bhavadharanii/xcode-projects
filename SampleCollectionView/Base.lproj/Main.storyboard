@@ -34,8 +34,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="148" height="98"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rI0-YC-ct5">
-                                                    <rect key="frame" x="0.6666666666666714" y="0.6666666666666643" width="147" height="97"/>
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" showsExpansionTextWhenTruncated="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rI0-YC-ct5">
+                                                    <rect key="frame" x="0.3333333333333286" y="0.3333333333333357" width="147.33333333333337" height="97.333333333333314"/>
                                                     <color key="backgroundColor" systemColor="systemGrayColor"/>
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="27"/>
@@ -45,10 +45,10 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="rI0-YC-ct5" firstAttribute="leading" secondItem="xc9-Gg-OOj" secondAttribute="leading" constant="0.5" id="K5P-1F-wqM"/>
-                                                <constraint firstAttribute="trailing" secondItem="rI0-YC-ct5" secondAttribute="trailing" constant="0.5" id="N2r-iN-v6Z"/>
-                                                <constraint firstAttribute="bottom" secondItem="rI0-YC-ct5" secondAttribute="bottom" constant="0.5" id="Syq-Fa-OwY"/>
-                                                <constraint firstItem="rI0-YC-ct5" firstAttribute="top" secondItem="xc9-Gg-OOj" secondAttribute="top" constant="0.5" id="tki-vd-xpP"/>
+                                                <constraint firstItem="rI0-YC-ct5" firstAttribute="leading" secondItem="xc9-Gg-OOj" secondAttribute="leading" constant="0.20000000000000001" id="K5P-1F-wqM"/>
+                                                <constraint firstAttribute="trailing" secondItem="rI0-YC-ct5" secondAttribute="trailing" constant="0.20000000000000001" id="N2r-iN-v6Z"/>
+                                                <constraint firstAttribute="bottom" secondItem="rI0-YC-ct5" secondAttribute="bottom" constant="0.20000000000000001" id="Syq-Fa-OwY"/>
+                                                <constraint firstItem="rI0-YC-ct5" firstAttribute="top" secondItem="xc9-Gg-OOj" secondAttribute="top" constant="0.20000000000000001" id="tki-vd-xpP"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -68,10 +68,9 @@
                                 <rect key="frame" x="1" y="60" width="391" height="298.66666666666669"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="60"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
-                                <color key="shadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <size key="shadowOffset" width="-2" height="-1"/>
+                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
