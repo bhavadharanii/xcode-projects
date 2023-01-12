@@ -22,15 +22,17 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var label2: UILabel!
     @IBOutlet weak var _collectionView: UICollectionView!
-    var collectionView: UICollectionView?
+    //    var collectionView: UICollectionView?
     var dataValues: [String] = ["AC","-/+","%","/","7","8","9","*","4","5","6","-","1","2","3","+","0",".","="]
-    var newValue: String?
-    var characterArray:[Character] =  []
-    
+    var newValue: String = ""
+    //var newValue: Double = 0.0
+    var characterArray:[Character] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
 }
+
 
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout  {
@@ -53,47 +55,71 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource,U
         }else if(indexPath.row < 3) {
             cell.numbersLabel.backgroundColor = .darkGray
         }else {
-            cell.numbersLabel.backgroundColor = .lightGray
+            cell.numbersLabel.backgroundColor = .gray
         }
         return cell
     }
     
     
-   
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         let flowayout = collectionViewLayout as? UICollectionViewFlowLayout
-        let space: CGFloat = (flowayout?.minimumInteritemSpacing ?? 0.0)
-        + (flowayout?.sectionInset.left ?? 0.0)
-        + (flowayout?.sectionInset.right ?? 0.0)
-        let size:CGFloat = (_collectionView.frame.size.width  - space) / 4.0
+        let space: CGFloat = flowayout?.minimumInteritemSpacing ?? 0.0
+        let size:CGFloat = (_collectionView.frame.size.width - space) / 4.0
         
-        //the size of 0th cell is higher than alal the other cell
-        if(indexPath.row == 16) {
-            return CGSize(width: size + 99, height: size)
-        }else {
-            return CGSize(width: size+1, height: size)
+        let cellHeight:CGFloat = 100
+        //the size of 0th cell is higher than all the other cell
+        if(dataValues[indexPath.row] == "0") {
+            return CGSize(width: size+size+1, height: cellHeight)
+        } else {
+            return CGSize(width: size, height: cellHeight)
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        newValue = label2.text
-        if let _newValue = newValue, dataValues[indexPath.row] != "=" {
-            newValue = _newValue + self.dataValues[indexPath.row]
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
+        
+        //      newValue = label2.text ?? ""
+        if dataValues[indexPath.row] != "=" {
+            newValue = newValue + self.dataValues[indexPath.row]
         }
         label2.text = newValue
-        
         if dataValues[indexPath.row] == "=" {
             doRespectiveOperation()
-        } else if dataValues[indexPath.row] == "AC" {
+        }
+                else if dataValues[indexPath.row] == "AC" {
             clearAll()
         }
-        
     }
+    
+
+    
+//
+//    {
+//        newValue = label2.text ?? ""
+//        if let _newValue = newValue, dataValues[indexPath.row] != "=" {
+//            if (dataValues[indexPath.row] == "." && !newValue.contains(".")) {
+//                newValue = _newValue + self.dataValues[indexPath.row]
+//            } else if (dataValues[indexPath.row] != ".") {
+//                newValue = _newValue + self.dataValues[indexPath.row]
+//            }
+//        }
+//        label2.text = newValue
+//        if dataValues[indexPath.row] == "=" {
+//            doRespectiveOperation()
+//        } else if dataValues[indexPath.row] == "AC" {
+//            //clearLabel()
+//        }
+//    }
+    
+    
+    
+    
+    
     
     //verticalspacing for the cells
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        
         return 1
     }
     
@@ -101,11 +127,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource,U
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1
     }
-    
-    
 }
-
-
 public extension String {
     /// SwifterSwift: Array of characters of a string.
     var charactersArray: [Character] {
@@ -114,7 +136,7 @@ public extension String {
 }
 
 extension ViewController {
-   
+    
     enum Operation: String {
         case add = "+"
         case subtract = "-"
@@ -124,8 +146,12 @@ extension ViewController {
     }
     
     func doRespectiveOperation() {
-        characterArray = newValue?.charactersArray ?? []
+        //chaange         characterArray = newValue.charactersArray
 
+        characterArray = newValue.charactersArray
+//        label2.text = "\(result)"
+//           clearLabel()
+        
         for (_index, value) in characterArray.enumerated() {
             if let operation = Operation(rawValue: String(value)) {
                 switch operation {
@@ -142,58 +168,73 @@ extension ViewController {
                 }
             }
         }
-    
+        
         //perfoms addition  operation
         func doAdd(_index: Int) {
             let operands = getOperands(index: _index)
-            let result = operands.firstNumber + operands.secondNumber
-            label2.text = (newValue ?? "") + "\n" + String(result)
+            let result:Double = Double(operands.firstNumber + operands.secondNumber)
+            label2.text = newValue  + "\n" + String(result)
+            newValue = ""
         }
         
-        //perfoms suubraction  operation
+        //perfoms subraction  operation
         func doSubtract(_index: Int) {
-             let operands = getOperands(index: _index)
-             let result =  operands.firstNumber - operands.secondNumber
-             label2.text = (newValue ?? "") + "\n" + String(result)
+            let operands = getOperands(index: _index)
+            let result:Double =  Double(operands.firstNumber - operands.secondNumber)
+            label2.text =  newValue  + "\n" + String(result)
+            newValue = ""
+            
         }
         
         //perfoms division ooperation
         func doDivide(_index: Int)  {
              let operands = getOperands(index: _index)
-             let result =  operands.firstNumber / operands.secondNumber
-             label2.text = (newValue ?? "") + "\n" + String(result)
+             let result:Double =  Double(operands.firstNumber / operands.secondNumber)
+             label2.text = newValue + "\n" + String(result)
+            newValue = ""
+            
         }
         
         //perfoms multiply  operation
         func doMultiply(_index: Int) {
-             let operands = getOperands(index: _index)
-             let result = operands.firstNumber * operands.secondNumber
-             label2.text = (newValue ?? "") + "\n" + String(result)
+            let operands = getOperands(index: _index)
+            let result:Double = Double(operands.firstNumber * operands.secondNumber)
+            label2.text =  newValue  + "\n" + String(result)
+            newValue = ""
+            
         }
         
         //perfoms modulo  operation
         func doModulo(_index: Int) {
-             let operands = getOperands(index: _index)
-             let result = operands.firstNumber % operands.secondNumber
-             label2.text = (newValue ?? "") + "\n" + String(result)
+            let operands = getOperands(index: _index)
+            let result:Double = Double(operands.firstNumber.truncatingRemainder(dividingBy: operands.secondNumber))
+            label2.text =  newValue   + "\n" + String(result)
+            newValue = ""
+            
         }
     }
     
-    func getOperands(index: Int) -> (firstNumber: Int, secondNumber: Int){
+    func getOperands(index: Int) -> (firstNumber: Double, secondNumber: Double){
         let _firstNumber = getNumberFromString(startIndex: 0, endIndex: index-1)
         let _secondNumber = getNumberFromString(startIndex: index+1, endIndex: characterArray.count-1)
         return (_firstNumber, _secondNumber )
     }
     
-    func getNumberFromString(startIndex: Int, endIndex: Int) -> Int {
+    func getNumberFromString(startIndex: Int, endIndex: Int) -> Double {
         var number: String?
         for i in startIndex...endIndex {
             number = (number ?? "") + String(characterArray[i])
         }
-        return Int(number ?? "") ?? 0
+        return Double(number ?? "") ?? 0.0
     }
     
     func clearAll() {
-        label2.text = ""
+        label2.text = " "
+        newValue = ""
     }
 }
+
+
+
+
+
